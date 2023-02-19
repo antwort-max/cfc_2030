@@ -17,20 +17,24 @@ class TablesController extends Controller
         $dato = file_get_contents("http://164.77.188.108/api/index.php/Api/product");
         $data = json_decode($dato, true);
         
-   //     DB::table('web_products')->delete();
+        DB::table('web_products')->delete();
 
-   //     foreach($data as $item) {
+        foreach($data as $item) {
                
-    //            $product            = New WebProduct;
-        //        $product->code      = $item['CODE'];
-      //          $product->name      = $item['NAME'];
-       //         $product->family    = $item['FAMILY'];
-       //         $product->brand     = $item['BRAND'];
-        //        $product->stock     = $item['STOCK'];
-         //       $product->price     = $item['PRICE'];
-          //      $product->unit      = $item['UNIT'];
-          //      $product->save();
-           // }
+            $product            	= New WebProduct;
+            $product->code      	= $item['CODE'];
+            $product->name      	= $item['NAME'];
+            $product->super_family	= $item['SUPER_FAMILY'];
+            $product->family    	= $item['FAMILY'];
+            $product->sub_family	= $item['SUB_FAMILY'];
+            $product->area			= $item['AREA'];
+            $product->brand     	= $item['BRAND'];
+            $product->stock     	= $item['STOCK'];
+            $product->price     	= $item['PRICE'];
+            $product->cost     		= $item['COST'];
+            $product->unit      	= $item['UNIT'];
+            $product->save();
+        }
 
         $carga = WebProduct::get();
         

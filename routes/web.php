@@ -23,13 +23,14 @@ Route::get('/web/local', [App\Http\Controllers\Web\WebNavegationController::clas
 Route::get('/web/sales', [App\Http\Controllers\Web\WebNavegationController::class, 'sales'])->name('web.sales');
 Route::get('/web/sales', [App\Http\Controllers\Web\WebNavegationController::class, 'sales'])->name('web.sales');
 
-Route::post('/web/search', [App\Http\Controllers\Web\WebNavegationController::class, 'search'])->name('web.search');
+Route::get('/web/search', [App\Http\Controllers\Web\WebNavegationController::class, 'search'])->name('web.search');
+//Route::post('/web/search', [App\Http\Controllers\Web\WebNavegationController::class, 'search'])->name('web.search');
+Route::get('/web/product/{product}', [App\Http\Controllers\Web\WebNavegationController::class, 'product'])->name('web.product'); 
 Route::get('/web/public/{ambiance}', [App\Http\Controllers\Web\WebNavegationController::class, 'ambiance'])->name('web.ambiance');
 Route::get('/web/ambiance/{ambiance}', [App\Http\Controllers\Web\WebNavegationController::class, 'ambiance'])->name('web.ambiance');
 Route::get('/web/family/{family}', [App\Http\Controllers\Web\WebNavegationController::class, 'family'])->name('web.family');
 Route::get('/web/notice/{notice}', [App\Http\Controllers\Web\WebNavegationController::class, 'notice'])->name('web.notice');
 Route::get('/web/solution/{solution}', [App\Http\Controllers\Web\WebNavegationController::class, 'solution'])->name('web.solution'); 
-
 // SYSTEM
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\System\HomeController::class, 'index'])->name('home');

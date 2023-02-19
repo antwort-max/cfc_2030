@@ -1,13 +1,20 @@
-<div class="container-fluid mt-2 d-none d-sm-block">
-    <div class="row">
-        @foreach ($family as $item)
-        
-        <div class="col-sm shadow p-3 mb-5 bg-white rounded">
-            <a href="{{ route('web.family', $item->id) }}">
-                <img src="{{ asset('storage/'.$item->image) }}" class="img-fluid" alt="{{ $item->name }}" >
-            </a>    
-        </div>
-        
-        @endforeach
+@extends('web.front.layout.app')
+
+@section('content')
+	<div class="container">
+      <div class="card mt-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <img src="{{ asset('storage/'.$family->image) }}" class="card-img-top" >
+            </div>
+            <div class="col-12 col-md-6">
+              <h5><br>{{ $family->name }}</br></h5>
+              <hr>
+              <?= $family->comment; ?>
+            </div>
+          </div>
+        </div> 
+      </div>
     </div>
-</div> 
+@endsection

@@ -20,7 +20,7 @@ class WebNavegationController extends Controller
         $menu_links = WebMenu::where('menu', 'LINKS')->get();
         
         $product    = WebProduct::orderByRaw('RAND()')->limit(4)->get();
-        $family     = ProductFamily::get();
+        $family     = ProductFamily::limit(6)->get();
         $ambiance   = WebAmbiance::get();
         $notice     = WebNotice::get();
         
@@ -38,7 +38,7 @@ class WebNavegationController extends Controller
         $ambiance   = WebAmbiance::findOrFail($ambiance);
         $notice     = WebNotice::get();
 
-        return view('web.front.ambiance.welcome', compact('menu_first', 'menu_sales', 'menu_links', 'product', 'family', 'ambiance', 'notice'));
+        return view('web.front.ambiance', compact('menu_first', 'menu_sales', 'menu_links', 'product', 'family', 'ambiance', 'notice'));
     }
 
     public function family($family)
@@ -51,7 +51,7 @@ class WebNavegationController extends Controller
         $family     = ProductFamily::findOrFail($family);
         $notice     = WebNotice::get();
 
-        return view('web.front.family.welcome', compact('menu_first', 'menu_sales', 'menu_links', 'product', 'family','notice'));
+        return view('web.front.family', compact('menu_first', 'menu_sales', 'menu_links', 'product', 'family','notice'));
     }
 
     public function search(Request $request)
@@ -59,18 +59,30 @@ class WebNavegationController extends Controller
         $menu_first = WebMenu::where('menu', 'FIRST')->get();
         $menu_sales = WebMenu::where('menu', 'SALES')->get();
         $menu_links = WebMenu::where('menu', 'LINKS')->get();
+    
+    	$search = $request->search;
         
-        $product = WebProduct::where('code', 'LIKE', '%'.$request->search.'%')
-            ->orWhere('name', 'LIKE', '%'.$request->search.'%')
-            ->orWhere('comment', 'LIKE', '%'.$request->search.'%')
-            ->orWhere('family', 'LIKE', '%'.$request->search.'%')
-            ->orWhere('brand', 'LIKE', '%'.$request->search.'%')
-            ->paginate(20);
+        $product = WebProduct::where('code', 'LIKE', '%'.$search.'%')
+            ->orWhere('name', 'LIKE', '%'.$search.'%')
+            ->orWhere('comment', 'LIKE', '%'.$search.'%')
+            ->orWhere('family', 'LIKE', '%'.$search.'%')
+            ->orWhere('brand', 'LIKE', '%'.$search.'%')
+            ->orderBy('stock', 'desc')->paginate(200);
 
-        $family = ProductFamily::where('name', 'LIKE', '%'.$request->search.'%')->get();
-    	//$family_add = WebProduct::select('disctict family')::where('name', 'LIKE', '%'.$request->search.'%')->get();
+        $family = ProductFamily::where('name', 'LIKE', '%'.$search.'%')->get();
 
-        return view('web.front.product.welcome', compact('menu_first', 'menu_sales', 'menu_links', 'product', 'family'));
+        return view('web.front.product', compact('search', 'menu_first', 'menu_sales', 'menu_links', 'product', 'family'));
+    }
+
+	public function product($code)
+    {
+        $menu_first = WebMenu::where('menu', 'FIRST')->get();
+        $menu_sales = WebMenu::where('menu', 'SALES')->get();
+        $menu_links = WebMenu::where('menu', 'LINKS')->get();
+        
+        $product = WebProduct::where('code', '=', $code)->first();
+
+        return view('web.front.kardex', compact('menu_first', 'menu_sales', 'menu_links', 'product'));
     }
    
 }
