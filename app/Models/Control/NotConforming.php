@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models\Control;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class NotConforming extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [ 
+        'date', 
+        'client', 
+        'product',
+        'worker', 
+        'name',
+        'image',
+        'file', 
+        'comment',
+        'status',   
+    ];
+}
